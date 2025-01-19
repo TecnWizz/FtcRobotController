@@ -59,42 +59,12 @@ public class auto extends LinearOpMode {
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         backRightMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        clawServo.setPosition(1);
+        clawIn();
         stopAllMotors();
     }
     private void driveToObservationZone() {
-
-        if (timer.seconds()<30.0){
-            while (counter<3) {
-                diagFrontLeft(MOTOR_POWER, 0.85);
-                spinLeft(MOTOR_POWER, 0.25);
-                driveForward(MOTOR_POWER, 0.85);
-                slideShift(MOTOR_POWER, 0.5);
-                extendArm(MOTOR_POWER, 0.5);
-                rotate();
-                clawOut();
-                roateBack();
-                extendArmReverse(MOTOR_POWER, 0.5);
-                slideShiftReverse(MOTOR_POWER, 0.5);
-                driveBackwards(MOTOR_POWER, 0.85);
-                spinRight(MOTOR_POWER, 0.25);
-                diagBackRight(MOTOR_POWER, 0.85);
-                strafeRight(MOTOR_POWER, 0.1);
-                driveForward(MOTOR_POWER, 0.4975);
-                slideShift(MOTOR_POWER, 0.5);
-                extendArm(MOTOR_POWER, 0.5);
-                intake(MOTOR_POWER, 0.5);
-                clawIn();
-                driveBackwards(MOTOR_POWER, 0.4975);
-                counter=counter+1;
-            }
-            driveForward(MOTOR_POWER, 0.2);
-            strafeRight(MOTOR_POWER, 3.5);
-            stopAllMotors();
-
-
-        }
-
+        driveForward(MOTOR_POWER, 0.1);
+        strafeRight(MOTOR_POWER, 2.3);
     }
     private void spinRight(double power, double seconds){
         frontLeftMotor.setPower(-power);

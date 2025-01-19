@@ -8,12 +8,18 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@TeleOp(name = "avocado teleop")
-public class Teleop extends LinearOpMode {
+@TeleOp(name = "avocado teleop cu pid")
+public class Teleop_with_PID extends LinearOpMode {
     boolean toggleState = false;
+    double kP = 0;
+    double kI = 0;
+    double kD = 0;
+    double kF = 0;
+    PIDFCoefficients pidf = new PIDFCoefficients(kP,kI,kD,kF);
     double powerMode = 3;
     public static double clawRotationPos = 0.69;
 
