@@ -9,13 +9,13 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
-import org.firstinspires.ftc.teamcode.Components.DriveTrain;
+import org.firstinspires.ftc.teamcode.Components.DriveTrainV2;
 
-@TeleOp(name = "Fiorosul Tudor")
-public class Teleop extends LinearOpMode {
+@TeleOp(name = "Gigel Terminatorul de Beri")
+public class sugoma extends LinearOpMode {
 
 
-   private DriveTrain chassis;
+    private DriveTrainV2 chassis;
 
     ///private Intake intake;
     ///private Arm arm;
@@ -37,7 +37,7 @@ public class Teleop extends LinearOpMode {
             lastGamepad1.copy(currentGamepad1);
             lastGamepad2.copy(currentGamepad2);
 
-            chassis.goGoVrumVrum(lastGamepad1, currentGamepad1);
+            chassis.goGoVrumVrumV2(lastGamepad1, currentGamepad1);
             ///arm.armControl(currentGamepad2);
             ///intake.aspirator(currentGamepad2);
 
@@ -77,7 +77,7 @@ public class Teleop extends LinearOpMode {
         ///rotateServo = hardwareMap.get(Servo.class,"rotateServo");
         ///intakeServo = hardwareMap.get(Crservo.class,"intakeServo");
 
-        chassis = new DriveTrain(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor,imu);
+        chassis = new DriveTrainV2(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
         ///intake = new Intake(intakeServo,rotateServo);
         ///arm = new Arm(extendMotor, slideShiftMotor);
 
