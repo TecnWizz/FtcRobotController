@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.teamcode.Components.DriveTrain;
@@ -21,6 +22,7 @@ public class Teleop extends LinearOpMode {
     private Gamepad lastGamepad2 = new Gamepad();
     private Gamepad currentGamepad2 = new Gamepad();
     DcMotorEx frontLeftMotor,backLeftMotor,frontRightMotor,backRightMotor;
+    IMU imu;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -55,6 +57,8 @@ public class Teleop extends LinearOpMode {
         frontRightMotor = hardwareMap.get(DcMotorEx.class,"frontRightMotor");
         backLeftMotor = hardwareMap.get(DcMotorEx.class,"backLeftMotor");
         backRightMotor = hardwareMap.get(DcMotorEx.class,"backRightMotor");
+        imu = hardwareMap.get(IMU.class, "imu");
+
 
         MotorConfigurationType m= frontLeftMotor.getMotorType();
         m.setAchieveableMaxRPMFraction(1);
@@ -71,7 +75,7 @@ public class Teleop extends LinearOpMode {
         ///rotateServo = hardwareMap.get(Servo.class,"rotateServo");
         ///intakeServo = hardwareMap.get(Crservo.class,"intakeServo");
 
-        chassis = new DriveTrain(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
+        chassis = new DriveTrain(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor,imu);
         ///intake = new Intake(intakeServo,rotateServo);
         ///arm = new Arm(extendMotor, slideShiftMotor);
 
