@@ -36,7 +36,6 @@ public class auto extends LinearOpMode {
         waitForStart();
         timer.reset();
 
-        clawIn();
         driveToObservationZone();
 
         telemetry.addData("Path", "Complete");
@@ -48,24 +47,24 @@ public class auto extends LinearOpMode {
         frontRightMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
         backLeftMotor = hardwareMap.get(DcMotor.class, "backLeftMotor");
         backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
-        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
-        extendMotor = hardwareMap.get(DcMotor.class, "extendMotor");
-        slideShiftMotor = hardwareMap.get(DcMotor.class, "slideShiftMotor");
-        rotateServo = hardwareMap.get(Servo.class, "rotateServo");
-        clawServo = hardwareMap.get(Servo.class, "clawServo");
+       /// intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
+       /// extendMotor = hardwareMap.get(DcMotor.class, "extendMotor");
+       /// slideShiftMotor = hardwareMap.get(DcMotor.class, "slideShiftMotor");
+       /// rotateServo = hardwareMap.get(Servo.class, "rotateServo");
+       /// clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
         frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         backRightMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        clawIn();
+
         stopAllMotors();
     }
     private void driveToObservationZone() {
-        driveForward(MOTOR_POWER, 0.1);
-        strafeRight(MOTOR_POWER, 2.3);
+        strafeRight(MOTOR_POWER,1);
     }
+
     private void spinRight(double power, double seconds){
         frontLeftMotor.setPower(-power);
         frontRightMotor.setPower(power);
@@ -230,7 +229,7 @@ public class auto extends LinearOpMode {
 
         stopAllMotors();
     }
-    private void extendArm(double power, double seconds){
+  /*  private void extendArm(double power, double seconds){
         if (timer.seconds() >= 30.0) return;
 
         extendMotor.setPower(power);
@@ -307,6 +306,8 @@ public class auto extends LinearOpMode {
         }
         stopAllMotors();
     }
+
+   */
     private void stopAllMotors() {
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
