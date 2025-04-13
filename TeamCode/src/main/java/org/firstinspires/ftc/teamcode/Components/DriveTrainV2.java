@@ -10,47 +10,75 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 public class  DriveTrainV2 {
-    private DcMotorEx frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor;
+    private DcMotorEx frontLeft, frontRight, backLeft, backRight;
     private double powerMode = 1;
     private double currentPower = powerMode;
-
+    boolean ok = true;
+    public enum State{
+        UP,
+        DOWN,
+    };
+    State state = State.DOWN;
     public DriveTrainV2(DcMotorEx frontLeft, DcMotorEx frontRight, DcMotorEx backLeft, DcMotorEx backRight) {
+        ok=true;
+        this.frontLeft = frontLeft;
+        this.frontRight = frontRight;
+        this.backLeft = backLeft;
+        this.backRight = backRight;
 
-        this.frontLeftMotor = frontLeft;
-        this.frontRightMotor = frontRight;
-        this.backLeftMotor = backLeft;
-        this.backRightMotor = backRight;
-
-        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
 
         setZeroPowerBehaviorV2(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     private void setZeroPowerBehaviorV2(DcMotor.ZeroPowerBehavior behavior) {
-        frontLeftMotor.setZeroPowerBehavior(behavior);
-        frontRightMotor.setZeroPowerBehavior(behavior);
-        backLeftMotor.setZeroPowerBehavior(behavior);
-        backRightMotor.setZeroPowerBehavior(behavior);
+        frontLeft.setZeroPowerBehavior(behavior);
+        frontRight.setZeroPowerBehavior(behavior);
+        backLeft.setZeroPowerBehavior(behavior);
+        backRight.setZeroPowerBehavior(behavior);
     }
 
     public void goGoVrumVrumV2(Gamepad lastGamepad, Gamepad currentGamepad) {
 
-        double y = -currentGamepad.left_stick_y; // Remember, Y stick value is reversed
-        double x = currentGamepad.left_stick_x * 1.1; // Counteract imperfect strafing
+        double y = -currentGamepad.left_stick_y;
+        double x = currentGamepad.left_stick_x * 1.1;
         double rx = currentGamepad.right_stick_x;
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x + rx) / denominator;
-        double frontRightPower = (y - x - rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
+        double frontLeftPower = (y + x + rx) * powerMode / denominator;
+        double backLeftPower = (y - x + rx) * powerMode / denominator;
+        double frontRightPower = (y - x - rx) * powerMode / denominator;
+        double backRightPower = (y + x - rx) * powerMode / denominator;
 
-        frontLeftMotor.setPower(frontLeftPower);
-        backLeftMotor.setPower(backLeftPower);
-        frontRightMotor.setPower(frontRightPower);
-        backRightMotor.setPower(backRightPower);
+        frontLeft.setPower(frontLeftPower);
+        backLeft.setPower(backLeftPower);
+        frontRight.setPower(frontRightPower);
+        backRight.setPower(backRightPower);
+
+        switch (state){
+            case UP:
+                powerMode=0.5;
+                break;
+            case DOWN:
+                powerMode=1;
+                break;
+        }
+
+        if (currentGamepad.circle){
+            if (ok==true) {
+                state = State.UP;
+                ok=false;
+            }
+            else if (ok==false){
+                state = State.DOWN;
+                ok=true;
+            }
+
+        }
+
+    }
 
 
     }
-}
+

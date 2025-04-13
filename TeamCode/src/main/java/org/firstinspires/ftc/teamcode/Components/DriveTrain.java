@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Components;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -10,31 +9,38 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 public class  DriveTrain {
-    private DcMotorEx frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor;
-    private double powerMode = 1;
-    private double currentPower = powerMode;
+    private DcMotorEx frontLeft, frontRight, backLeft, backRight;
+    public double powerMode = 1;
+    public double currentPower = powerMode;
     public IMU imu;
+    boolean ok = true;
+    public enum State{
+        UP,
+        DOWN,
+    };
+    State state = State.DOWN;
     IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
             RevHubOrientationOnRobot.UsbFacingDirection.UP));
     public DriveTrain(DcMotorEx frontLeft, DcMotorEx frontRight, DcMotorEx backLeft, DcMotorEx backRight, IMU imu) {
+        ok = true;
         this.imu = imu;
         imu.initialize(parameters);
-        this.frontLeftMotor = frontLeft;
-        this.frontRightMotor = frontRight;
-        this.backLeftMotor = backLeft;
-        this.backRightMotor = backRight;
+        this.frontLeft = frontLeft;
+        this.frontRight = frontRight;
+        this.backLeft = backLeft;
+        this.backRight = backRight;
 
-        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
 
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     private void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior behavior) {
-        frontLeftMotor.setZeroPowerBehavior(behavior);
-        frontRightMotor.setZeroPowerBehavior(behavior);
-        backLeftMotor.setZeroPowerBehavior(behavior);
-        backRightMotor.setZeroPowerBehavior(behavior);
+        frontLeft.setZeroPowerBehavior(behavior);
+        frontRight.setZeroPowerBehavior(behavior);
+        backLeft.setZeroPowerBehavior(behavior);
+        backRight.setZeroPowerBehavior(behavior);
     }
 
     public void goGoVrumVrum(Gamepad lastGamepad, Gamepad currentGamepad) {
@@ -54,16 +60,38 @@ public class  DriveTrain {
         rotX = rotX * 1.1;
 
         double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-        double frontLeftPower = (rotY + rotX + rx) / denominator;
-        double backLeftPower = (rotY - rotX + rx) / denominator;
-        double frontRightPower = (rotY - rotX - rx) / denominator;
-        double backRightPower = (rotY + rotX - rx) / denominator;
+        double frontLeftPower = (rotY + rotX + rx) * powerMode / denominator;
+        double backLeftPower = (rotY - rotX + rx) * powerMode / denominator;
+        double frontRightPower = (rotY - rotX - rx) * powerMode / denominator;
+        double backRightPower = (rotY + rotX - rx) * powerMode / denominator;
 
-        frontLeftMotor.setPower(frontLeftPower);
-        backLeftMotor.setPower(backLeftPower);
-        frontRightMotor.setPower(frontRightPower);
-        backRightMotor.setPower(backRightPower);
+        frontLeft.setPower(frontLeftPower);
+        backLeft.setPower(backLeftPower);
+        frontRight.setPower(frontRightPower);
+        backRight.setPower(backRightPower);
 
+        switch (state){
+            case UP:
+                powerMode=0.5;
+                break;
+            case DOWN:
+                powerMode=1;
+                break;
+        }
+
+        if (currentGamepad.circle){
+            if (ok==true) {
+                state=State.UP;
+                ok=false;
+            }
+            else if (ok==false){
+                state = State.DOWN;
+                ok=true;
+            }
+
+        }
 
     }
-}
+
+    }
+

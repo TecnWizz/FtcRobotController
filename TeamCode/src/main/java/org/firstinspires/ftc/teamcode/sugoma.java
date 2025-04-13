@@ -1,17 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.IMU;
+
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.teamcode.Components.DriveTrainV2;
 
-@TeleOp(name = "Gigel Terminatorul de Beri")
+@TeleOp(name = "Avocado_Tele(robot centric)")
 public class sugoma extends LinearOpMode {
 
 
@@ -23,8 +23,7 @@ public class sugoma extends LinearOpMode {
     private Gamepad currentGamepad1 = new Gamepad();
     private Gamepad lastGamepad2 = new Gamepad();
     private Gamepad currentGamepad2 = new Gamepad();
-    DcMotorEx frontLeftMotor,backLeftMotor,frontRightMotor,backRightMotor;
-    IMU imu;
+    DcMotorEx frontLeft,backLeft,frontRight,backRight;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -55,20 +54,19 @@ public class sugoma extends LinearOpMode {
         telemetry.addData("Gaempad2 input",currentGamepad2);
         telemetry.addData("0::---------------------------:",0);
 
-        frontLeftMotor = hardwareMap.get(DcMotorEx.class,"frontLeftMotor");
-        frontRightMotor = hardwareMap.get(DcMotorEx.class,"frontRightMotor");
-        backLeftMotor = hardwareMap.get(DcMotorEx.class,"backLeftMotor");
-        backRightMotor = hardwareMap.get(DcMotorEx.class,"backRightMotor");
-        imu = hardwareMap.get(IMU.class, "imu");
+        frontLeft = hardwareMap.get(DcMotorEx.class,"frontLeft");
+        frontRight = hardwareMap.get(DcMotorEx.class,"frontRight");
+        backLeft = hardwareMap.get(DcMotorEx.class,"backLeft");
+        backRight = hardwareMap.get(DcMotorEx.class,"backRight");
 
 
-        MotorConfigurationType m= frontLeftMotor.getMotorType();
+        MotorConfigurationType m= frontLeft.getMotorType();
         m.setAchieveableMaxRPMFraction(1);
 
-        frontLeftMotor.setMotorType(m);
-        frontRightMotor.setMotorType(m);
-        backLeftMotor.setMotorType(m);
-        backRightMotor.setMotorType(m);
+        frontLeft.setMotorType(m);
+        frontRight.setMotorType(m);
+        backLeft.setMotorType(m);
+        backRight.setMotorType(m);
 
 
         ///extendMotor = hardwareMap.get(DcMotorEx.class,"extendMotor");
@@ -77,7 +75,7 @@ public class sugoma extends LinearOpMode {
         ///rotateServo = hardwareMap.get(Servo.class,"rotateServo");
         ///intakeServo = hardwareMap.get(Crservo.class,"intakeServo");
 
-        chassis = new DriveTrainV2(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
+        chassis = new DriveTrainV2(frontLeft, frontRight, backLeft, backRight);
         ///intake = new Intake(intakeServo,rotateServo);
         ///arm = new Arm(extendMotor, slideShiftMotor);
 
