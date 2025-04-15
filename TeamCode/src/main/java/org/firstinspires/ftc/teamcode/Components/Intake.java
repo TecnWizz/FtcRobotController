@@ -7,14 +7,18 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Intake {
 
-    private CRServo intakeServo;
-    private Servo rotateServo;
-    public Intake(CRServo intakeMotor,Servo rotateServo) {
-        this.intakeServo = intakeMotor;
-        this.rotateServo = rotateServo;
+    private CRServo intake1, intake2;
+    private Servo rotate;
+    boolean ok = false;
+
+    public Intake(CRServo intake1, CRServo intake2, Servo rotateServo) {
+        this.intake2 = intake2;
+        this.intake1 = intake1;
+        this.rotate = rotateServo;
         rotateServo.setPosition(0);
     }
-    public enum State{
+
+    public enum State {
         neutralState,
         intake,
         outake,
@@ -22,38 +26,45 @@ public class Intake {
         rotateOut,
 
     };
-    public void aspirator(Gamepad currentGamepad) {
-        State state = State.neutralState;
-        switch(state){
+    State state = State.neutralState;
 
+    public void aspirator(Gamepad currentGamepad) {
+
+        switch (state) {
             case intake:
-                if (currentGamepad.right_trigger!=0){
-                    intakeServo.setPower((currentGamepad.right_trigger) * 2);
-                    state=State.intake;
-                }
+                intake1.setPower(currentGamepad.right_trigger);
+                intake2.setPower(currentGamepad.right_trigger);
+                break;
+            case outake:
+                intake1.setPower(-currentGamepad.left_trigger);
+                intake2.setPower(-currentGamepad.left_trigger);
+                break;
+            case rotateIn:
+                rotate.setPosition(1);
+                break;
+            case rotateOut:
+                rotate.setPosition(0);
                 break;
 
-            case outake:
-                if (currentGamepad.left_trigger!=0){
-                    intakeServo.setPower((currentGamepad.left_trigger) * 2);
-                    state=State.outake;
-                }
-
-            case rotateIn:
-                if (currentGamepad.right_bumper){
-                    state=State.rotateIn;
-                    rotateServo.setPosition(1);
-                }
-
-            case rotateOut:
-                if (currentGamepad.left_bumper){
-                    state=State.rotateOut;
-                    rotateServo.setPosition(0);
-                }
-
+        }
+        if (currentGamepad.square) {
+            if (ok == false) {
+                state = State.rotateIn;
+                ok = true;
             }
-
+            if (ok == true) {
+                state = State.rotateOut;
+                ok = false;
+            }
+        }
+        if (currentGamepad.right_trigger != 0) {
+            state = State.intake;
+        }
+        if (currentGamepad.left_trigger != 0) {
+            state = State.outake;
         }
 
+
     }
+}
 

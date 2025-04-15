@@ -19,7 +19,7 @@ public class  DriveTrain {
         DOWN,
     };
     State state = State.DOWN;
-    IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+    IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
             RevHubOrientationOnRobot.UsbFacingDirection.UP));
     public DriveTrain(DcMotorEx frontLeft, DcMotorEx frontRight, DcMotorEx backLeft, DcMotorEx backRight, IMU imu) {
         ok = true;
@@ -33,21 +33,18 @@ public class  DriveTrain {
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
 
-        setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
-    private void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior behavior) {
-        frontLeft.setZeroPowerBehavior(behavior);
-        frontRight.setZeroPowerBehavior(behavior);
-        backLeft.setZeroPowerBehavior(behavior);
-        backRight.setZeroPowerBehavior(behavior);
-    }
 
     public void goGoVrumVrum(Gamepad lastGamepad, Gamepad currentGamepad) {
 
         double y = currentGamepad.left_stick_y;
         double x = -currentGamepad.left_stick_x;
-        double rx = -currentGamepad.left_trigger+currentGamepad.right_trigger;
+        double rx = -currentGamepad.right_trigger+currentGamepad.left_trigger;
         if (currentGamepad.options) {
             imu.resetYaw();
         }

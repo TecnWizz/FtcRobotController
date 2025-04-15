@@ -26,30 +26,26 @@ public class  DriveTrainV2 {
         this.backLeft = backLeft;
         this.backRight = backRight;
 
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        setZeroPowerBehaviorV2(DcMotor.ZeroPowerBehavior.BRAKE);
-    }
-
-    private void setZeroPowerBehaviorV2(DcMotor.ZeroPowerBehavior behavior) {
-        frontLeft.setZeroPowerBehavior(behavior);
-        frontRight.setZeroPowerBehavior(behavior);
-        backLeft.setZeroPowerBehavior(behavior);
-        backRight.setZeroPowerBehavior(behavior);
+        frontLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
     public void goGoVrumVrumV2(Gamepad lastGamepad, Gamepad currentGamepad) {
 
-        double y = -currentGamepad.left_stick_y;
+        double y = currentGamepad.left_stick_y;
         double x = currentGamepad.left_stick_x * 1.1;
-        double rx = currentGamepad.right_stick_x;
+        double rx = -currentGamepad.right_trigger+currentGamepad.left_trigger;
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (y + x + rx) * powerMode / denominator;
-        double backLeftPower = (y - x + rx) * powerMode / denominator;
-        double frontRightPower = (y - x - rx) * powerMode / denominator;
-        double backRightPower = (y + x - rx) * powerMode / denominator;
+        double frontLeftPower = (y + x + rx)/ denominator * powerMode;
+        double backLeftPower = (y - x + rx) / denominator * powerMode;
+        double frontRightPower = (y - x - rx) / denominator * powerMode;
+        double backRightPower = (y + x - rx) / denominator * powerMode;
 
         frontLeft.setPower(frontLeftPower);
         backLeft.setPower(backLeftPower);

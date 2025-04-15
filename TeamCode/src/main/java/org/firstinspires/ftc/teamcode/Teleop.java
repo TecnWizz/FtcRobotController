@@ -59,7 +59,7 @@ public class Teleop extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotorEx.class,"frontRight");
         backLeft = hardwareMap.get(DcMotorEx.class,"backLeft");
         backRight = hardwareMap.get(DcMotorEx.class,"backRight");
-
+        imu = hardwareMap.get(IMU.class,"imu");
 
         MotorConfigurationType m= frontLeft.getMotorType();
         m.setAchieveableMaxRPMFraction(1);
