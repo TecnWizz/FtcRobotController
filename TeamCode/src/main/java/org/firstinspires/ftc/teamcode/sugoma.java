@@ -1,21 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.IMU;
+
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
-import org.firstinspires.ftc.teamcode.Components.DriveTrain;
+import org.firstinspires.ftc.teamcode.Components.DriveTrainV2;
 
-@TeleOp(name = "Avocado_Tele(field centric)")
-public class Teleop extends LinearOpMode {
+@TeleOp(name = "Avocado_Tele(robot centric)")
+public class sugoma extends LinearOpMode {
 
 
-   private DriveTrain chassis;
+    private DriveTrainV2 chassis;
 
     ///private Intake intake;
     ///private Arm arm;
@@ -24,7 +24,6 @@ public class Teleop extends LinearOpMode {
     private Gamepad lastGamepad2 = new Gamepad();
     private Gamepad currentGamepad2 = new Gamepad();
     DcMotorEx frontLeft,backLeft,frontRight,backRight;
-    IMU imu;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -37,7 +36,7 @@ public class Teleop extends LinearOpMode {
             lastGamepad1.copy(currentGamepad1);
             lastGamepad2.copy(currentGamepad2);
 
-            chassis.goGoVrumVrum(lastGamepad1, currentGamepad1);
+            chassis.goGoVrumVrumV2(lastGamepad1, currentGamepad1);
             ///arm.armControl(currentGamepad2);
             ///intake.aspirator(currentGamepad2);
 
@@ -59,7 +58,7 @@ public class Teleop extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotorEx.class,"frontRight");
         backLeft = hardwareMap.get(DcMotorEx.class,"backLeft");
         backRight = hardwareMap.get(DcMotorEx.class,"backRight");
-        imu = hardwareMap.get(IMU.class,"imu");
+
 
         MotorConfigurationType m= frontLeft.getMotorType();
         m.setAchieveableMaxRPMFraction(1);
@@ -76,7 +75,7 @@ public class Teleop extends LinearOpMode {
         ///rotateServo = hardwareMap.get(Servo.class,"rotateServo");
         ///intakeServo = hardwareMap.get(Crservo.class,"intakeServo");
 
-        chassis = new DriveTrain(frontLeft, frontRight, backLeft, backRight,imu);
+        chassis = new DriveTrainV2(frontLeft, frontRight, backLeft, backRight);
         ///intake = new Intake(intakeServo,rotateServo);
         ///arm = new Arm(extendMotor, slideShiftMotor);
 
