@@ -1,28 +1,29 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OpModes;
+
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.IMU;
+
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
-import org.firstinspires.ftc.teamcode.Components.DriveTrain;
-import org.firstinspires.ftc.teamcode.Components.DriveTrainV2;
+import org.firstinspires.ftc.teamcode.Components.DriveTrainRC;
 
-@TeleOp(name="Avocado_Tele_1p(robot centric)")
-public class Tele_one_player extends LinearOpMode {
+@TeleOp(name = "Avocado_Tele(robot centric)")
+public class TeleopFC extends LinearOpMode {
 
-    private DriveTrainV2 chassisV2;
 
-    ///private IntakeV2 intakeV2;
-    ///private ArmV2 armV2;
+    private DriveTrainRC chassis;
+
+    ///private Intake intake;
+    ///private Arm arm;
     private Gamepad lastGamepad1 = new Gamepad();
     private Gamepad currentGamepad1 = new Gamepad();
     private Gamepad lastGamepad2 = new Gamepad();
     private Gamepad currentGamepad2 = new Gamepad();
     DcMotorEx frontLeft,backLeft,frontRight,backRight;
-
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -30,13 +31,24 @@ public class Tele_one_player extends LinearOpMode {
 
         waitForStart();
 
-        while (opModeIsActive()){
-            chassisV2.goGoVrumVrumV2(currentGamepad1,lastGamepad1);
+        while (opModeIsActive()) {
+
+            lastGamepad1.copy(currentGamepad1);
+            lastGamepad2.copy(currentGamepad2);
+
+            chassis.goGoVrumVrumRC(lastGamepad1, currentGamepad1);
+            ///arm.armControl(currentGamepad2);
+            ///intake.aspirator(currentGamepad2);
+
+            currentGamepad1.copy(gamepad1);
+            currentGamepad2.copy(gamepad2);
+
+            telemetry.update();
 
         }
+    }
 
-        }
-    public void initializeHardware(){
+    private void initializeHardware() {
         telemetry.addData("0::---------------------------:",0);
         telemetry.addData("Gamepad1 input",currentGamepad1);
         telemetry.addData("Gaempad2 input",currentGamepad2);
@@ -46,7 +58,6 @@ public class Tele_one_player extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotorEx.class,"frontRight");
         backLeft = hardwareMap.get(DcMotorEx.class,"backLeft");
         backRight = hardwareMap.get(DcMotorEx.class,"backRight");
-
 
 
         MotorConfigurationType m= frontLeft.getMotorType();
@@ -64,9 +75,11 @@ public class Tele_one_player extends LinearOpMode {
         ///rotateServo = hardwareMap.get(Servo.class,"rotateServo");
         ///intakeServo = hardwareMap.get(Crservo.class,"intakeServo");
 
-        chassisV2 = new DriveTrainV2(frontLeft, frontRight, backLeft, backRight);
-        ///intakeV2 = new IntakeV2(intakeServo,rotateServo);
-        ///armV2 = new ArmV2(extendMotor, slideShiftMotor);
-    }
-    }
+        chassis = new DriveTrainRC(frontLeft, frontRight, backLeft, backRight);
+        ///intake = new Intake(intakeServo,rotateServo);
+        ///arm = new Arm(extendMotor, slideShiftMotor);
 
+
+
+    }
+}

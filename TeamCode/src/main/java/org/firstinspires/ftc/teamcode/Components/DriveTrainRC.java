@@ -1,15 +1,11 @@
 package org.firstinspires.ftc.teamcode.Components;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.IMU;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
-public class  DriveTrainV2 {
+public class DriveTrainRC {
     private DcMotorEx frontLeft, frontRight, backLeft, backRight;
     private double powerMode = 1;
     private double currentPower = powerMode;
@@ -19,7 +15,7 @@ public class  DriveTrainV2 {
         DOWN,
     };
     State state = State.DOWN;
-    public DriveTrainV2(DcMotorEx frontLeft, DcMotorEx frontRight, DcMotorEx backLeft, DcMotorEx backRight) {
+    public DriveTrainRC(DcMotorEx frontLeft, DcMotorEx frontRight, DcMotorEx backLeft, DcMotorEx backRight) {
         ok=true;
         this.frontLeft = frontLeft;
         this.frontRight = frontRight;
@@ -35,7 +31,7 @@ public class  DriveTrainV2 {
         backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
-    public void goGoVrumVrumV2(Gamepad lastGamepad, Gamepad currentGamepad) {
+    public void goGoVrumVrumRC(Gamepad lastGamepad, Gamepad currentGamepad) {
 
         double y = currentGamepad.left_stick_y;
         double x = currentGamepad.left_stick_x * 1.1;

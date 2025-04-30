@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
-public class  DriveTrain {
+public class DriveTrainFC {
     private DcMotorEx frontLeft, frontRight, backLeft, backRight;
     public double powerMode = 1;
     public double currentPower = powerMode;
@@ -21,7 +21,7 @@ public class  DriveTrain {
     State state = State.DOWN;
     IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
             RevHubOrientationOnRobot.UsbFacingDirection.UP));
-    public DriveTrain(DcMotorEx frontLeft, DcMotorEx frontRight, DcMotorEx backLeft, DcMotorEx backRight, IMU imu) {
+    public DriveTrainFC(DcMotorEx frontLeft, DcMotorEx frontRight, DcMotorEx backLeft, DcMotorEx backRight, IMU imu) {
         ok = true;
         this.imu = imu;
         imu.initialize(parameters);
@@ -40,7 +40,7 @@ public class  DriveTrain {
     }
 
 
-    public void goGoVrumVrum(Gamepad lastGamepad, Gamepad currentGamepad) {
+    public void goGoVrumVrumFC(Gamepad lastGamepad, Gamepad currentGamepad) {
 
         double y = currentGamepad.left_stick_y;
         double x = -currentGamepad.left_stick_x;

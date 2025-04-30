@@ -1,6 +1,5 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OpModes;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -9,13 +8,13 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
-import org.firstinspires.ftc.teamcode.Components.DriveTrain;
+import org.firstinspires.ftc.teamcode.Components.DriveTrainFC;
 
 @TeleOp(name = "Avocado_Tele(field centric)")
 public class Teleop extends LinearOpMode {
 
 
-   private DriveTrain chassis;
+   private DriveTrainFC chassis;
 
     ///private Intake intake;
     ///private Arm arm;
@@ -37,7 +36,7 @@ public class Teleop extends LinearOpMode {
             lastGamepad1.copy(currentGamepad1);
             lastGamepad2.copy(currentGamepad2);
 
-            chassis.goGoVrumVrum(lastGamepad1, currentGamepad1);
+            chassis.goGoVrumVrumFC(lastGamepad1, currentGamepad1);
             ///arm.armControl(currentGamepad2);
             ///intake.aspirator(currentGamepad2);
 
@@ -76,7 +75,7 @@ public class Teleop extends LinearOpMode {
         ///rotateServo = hardwareMap.get(Servo.class,"rotateServo");
         ///intakeServo = hardwareMap.get(Crservo.class,"intakeServo");
 
-        chassis = new DriveTrain(frontLeft, frontRight, backLeft, backRight,imu);
+        chassis = new DriveTrainFC(frontLeft, frontRight, backLeft, backRight,imu);
         ///intake = new Intake(intakeServo,rotateServo);
         ///arm = new Arm(extendMotor, slideShiftMotor);
 
