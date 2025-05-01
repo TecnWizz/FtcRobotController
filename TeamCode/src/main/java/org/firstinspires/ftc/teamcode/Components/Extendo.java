@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 public class Extendo {
     private static final double rotation = 2786;
     private static final double divizor = 0.5;
-    private DcMotorEx extendo;
+    private DcMotorEx extendMotor;
     int balancePos =(int)(rotation * divizor);
     int targetPos = (int)rotation;
     int neutralPos;
@@ -19,27 +19,27 @@ public class Extendo {
         Extend,
     };
     State state = State.Neutral;
-    public Extendo (DcMotorEx extendo){
-        this.extendo = extendo;
-        neutralPos = extendo.getCurrentPosition();
-        extendo.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        extendo.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        extendo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    public Extendo (DcMotorEx extendMotor){
+        this.extendMotor = extendMotor;
+        neutralPos = extendMotor.getCurrentPosition();
+        extendMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        extendMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        extendMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    private void extend (Gamepad currentGamepad, Gamepad lastGamepad){
+    public void extend (Gamepad currentGamepad){
 
         switch (state){
             case Retract:
-                  extendo.setTargetPosition(neutralPos);
-                  extendo.setPower(1);
+                  extendMotor.setTargetPosition(neutralPos);
+                  extendMotor.setPower(1);
                   break;
             case Balance:
-                  extendo.setTargetPosition(balancePos);
-                  extendo.setPower(1);
+                  extendMotor.setTargetPosition(balancePos);
+                  extendMotor.setPower(1);
                   break;
             case Extend:
-                  extendo.setTargetPosition(targetPos);
-                  extendo.setPower(1);
+                  extendMotor.setTargetPosition(targetPos);
+                  extendMotor.setPower(1);
                   break;
         }
         if (currentGamepad.circle)
@@ -49,6 +49,6 @@ public class Extendo {
         if (currentGamepad.left_bumper)
             state=State.Extend;
 
-        extendo.setPower(currentGamepad.right_stick_x);
+        extendMotor.setPower(currentGamepad.right_stick_x);
     }
 }
