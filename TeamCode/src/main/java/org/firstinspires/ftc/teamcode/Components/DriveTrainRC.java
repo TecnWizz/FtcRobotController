@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 
 public class DriveTrainRC {
-    private DcMotorEx frontLeft, frontRight, backLeft, backRight;
+    private DcMotorEx leftFront, rightFront, leftBack, rightBack;
     private double powerMode = 1;
     private double currentPower = powerMode;
     boolean ok = true;
@@ -15,20 +15,20 @@ public class DriveTrainRC {
         DOWN,
     };
     State state = State.DOWN;
-    public DriveTrainRC(DcMotorEx frontLeft, DcMotorEx frontRight, DcMotorEx backLeft, DcMotorEx backRight) {
+    public DriveTrainRC(DcMotorEx leftFront, DcMotorEx rightFront, DcMotorEx leftBack, DcMotorEx rightBack) {
         ok=true;
-        this.frontLeft = frontLeft;
-        this.frontRight = frontRight;
-        this.backLeft = backLeft;
-        this.backRight = backRight;
+        this.leftFront = leftFront;
+        this.rightFront = rightFront;
+        this.leftBack=leftBack;
+        this.rightBack = rightBack;
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        leftBack.setDirection(DcMotor.Direction.REVERSE);
 
-        frontLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
     public void goGoVrumVrumRC(Gamepad lastGamepad, Gamepad currentGamepad) {
@@ -43,10 +43,10 @@ public class DriveTrainRC {
         double frontRightPower = (y - x - rx) / denominator * powerMode;
         double backRightPower = (y + x - rx) / denominator * powerMode;
 
-        frontLeft.setPower(frontLeftPower);
-        backLeft.setPower(backLeftPower);
-        frontRight.setPower(frontRightPower);
-        backRight.setPower(backRightPower);
+        leftFront.setPower(frontLeftPower);
+        leftBack.setPower(backLeftPower);
+        rightFront.setPower(frontRightPower);
+        rightBack.setPower(backRightPower);
 
         switch (state){
             case UP:

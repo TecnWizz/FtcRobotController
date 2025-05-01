@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 import org.firstinspires.ftc.teamcode.Components.DriveTrainFC;
 
 @TeleOp(name = "Avocado_Tele(field centric)")
-public class Teleop extends LinearOpMode {
+public class TeleopRC extends LinearOpMode {
 
 
    private DriveTrainFC chassis;

@@ -23,7 +23,7 @@ public class TeleopFC extends LinearOpMode {
     private Gamepad currentGamepad1 = new Gamepad();
     private Gamepad lastGamepad2 = new Gamepad();
     private Gamepad currentGamepad2 = new Gamepad();
-    DcMotorEx frontLeft,backLeft,frontRight,backRight;
+    DcMotorEx leftFront,leftBack,rightFront,rightBack;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -54,19 +54,19 @@ public class TeleopFC extends LinearOpMode {
         telemetry.addData("Gaempad2 input",currentGamepad2);
         telemetry.addData("0::---------------------------:",0);
 
-        frontLeft = hardwareMap.get(DcMotorEx.class,"frontLeft");
-        frontRight = hardwareMap.get(DcMotorEx.class,"frontRight");
-        backLeft = hardwareMap.get(DcMotorEx.class,"backLeft");
-        backRight = hardwareMap.get(DcMotorEx.class,"backRight");
+        leftFront = hardwareMap.get(DcMotorEx.class,"leftFront");
+        rightFront = hardwareMap.get(DcMotorEx.class,"rightFront");
+        leftBack = hardwareMap.get(DcMotorEx.class,"leftBack");
+        rightBack = hardwareMap.get(DcMotorEx.class,"rightBack");
 
 
-        MotorConfigurationType m= frontLeft.getMotorType();
+        MotorConfigurationType m= leftFront.getMotorType();
         m.setAchieveableMaxRPMFraction(1);
 
-        frontLeft.setMotorType(m);
-        frontRight.setMotorType(m);
-        backLeft.setMotorType(m);
-        backRight.setMotorType(m);
+        leftFront.setMotorType(m);
+        rightFront.setMotorType(m);
+        leftBack.setMotorType(m);
+        rightFront.setMotorType(m);
 
 
         ///extendMotor = hardwareMap.get(DcMotorEx.class,"extendMotor");
@@ -75,7 +75,7 @@ public class TeleopFC extends LinearOpMode {
         ///rotateServo = hardwareMap.get(Servo.class,"rotateServo");
         ///intakeServo = hardwareMap.get(Crservo.class,"intakeServo");
 
-        chassis = new DriveTrainRC(frontLeft, frontRight, backLeft, backRight);
+        chassis = new DriveTrainRC(leftFront, rightFront, leftBack, rightBack);
         ///intake = new Intake(intakeServo,rotateServo);
         ///arm = new Arm(extendMotor, slideShiftMotor);
 

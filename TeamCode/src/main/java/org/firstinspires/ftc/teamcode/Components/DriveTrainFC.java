@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 public class DriveTrainFC {
-    private DcMotorEx frontLeft, frontRight, backLeft, backRight;
+    private DcMotorEx leftFront, rightFront, leftBack, rightBack;
     public double powerMode = 1;
     public double currentPower = powerMode;
     public IMU imu;
@@ -21,22 +21,22 @@ public class DriveTrainFC {
     State state = State.DOWN;
     IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
             RevHubOrientationOnRobot.UsbFacingDirection.UP));
-    public DriveTrainFC(DcMotorEx frontLeft, DcMotorEx frontRight, DcMotorEx backLeft, DcMotorEx backRight, IMU imu) {
+    public DriveTrainFC(DcMotorEx leftFront, DcMotorEx rightFront, DcMotorEx leftBack, DcMotorEx rightBack, IMU imu) {
         ok = true;
         this.imu = imu;
         imu.initialize(parameters);
-        this.frontLeft = frontLeft;
-        this.frontRight = frontRight;
-        this.backLeft = backLeft;
-        this.backRight = backRight;
+        this.leftFront = leftFront;
+        this.rightFront = rightFront;
+        this.leftBack = leftBack;
+        this.rightBack = rightBack;
 
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        rightBack.setDirection(DcMotor.Direction.REVERSE);
 
-        frontLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
 
@@ -62,10 +62,10 @@ public class DriveTrainFC {
         double frontRightPower = (rotY - rotX - rx) * powerMode / denominator;
         double backRightPower = (rotY + rotX - rx) * powerMode / denominator;
 
-        frontLeft.setPower(frontLeftPower);
-        backLeft.setPower(backLeftPower);
-        frontRight.setPower(frontRightPower);
-        backRight.setPower(backRightPower);
+        leftFront.setPower(frontLeftPower);
+        leftBack.setPower(backLeftPower);
+        rightFront.setPower(frontRightPower);
+        rightBack.setPower(backRightPower);
 
         switch (state){
             case UP:
