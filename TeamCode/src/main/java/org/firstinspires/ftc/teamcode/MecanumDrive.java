@@ -1,5 +1,5 @@
 
-// TODO: fill in the PID constants
+// TODO: fill in the correct PID constants
 
 package org.firstinspires.ftc.teamcode;
 
