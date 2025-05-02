@@ -23,10 +23,10 @@ public class TeleopFC extends LinearOpMode {
     private Intake intake;
     private Lift lift;
     private Extendo extendo;
-    private Gamepad lastGamepad1 = new Gamepad();
-    private Gamepad currentGamepad1 = new Gamepad();
-    private Gamepad lastGamepad2 = new Gamepad();
-    private Gamepad currentGamepad2 = new Gamepad();
+    private final Gamepad lastGamepad1 = new Gamepad();
+    private final Gamepad currentGamepad1 = new Gamepad();
+    private final Gamepad lastGamepad2 = new Gamepad();
+    private final Gamepad currentGamepad2 = new Gamepad();
     DcMotorEx frontLeft,backLeft,frontRight,backRight,liftMotor1,liftMotor2,extendMotor;
     CRServo intake1,intake2;
     Servo rotate;

@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Lift{
-    boolean ok = true;
-    private DcMotorEx liftMotor1,liftMotor2;
+    boolean ok;
+    private final DcMotorEx liftMotor1,liftMotor2;
     private static final double rotations = 2786;
     private static  final double divisor = 0.5;
     private static final int targetPosition = (int)(rotations * divisor);
@@ -26,7 +26,7 @@ public class Lift{
     public enum State{
         UP,
         DOWN,
-    };
+    }
     State state = State.DOWN;
     public void dropDown(Gamepad currentGamepad) {
 
@@ -47,11 +47,11 @@ public class Lift{
         }
 
         if (currentGamepad.circle){
-            if (ok==true) {
+            if (ok) {
                 state = State.UP;
                 ok=false;
             }
-            else if (ok==false){
+            else{
                 state = State.DOWN;
                 ok=true;
             }

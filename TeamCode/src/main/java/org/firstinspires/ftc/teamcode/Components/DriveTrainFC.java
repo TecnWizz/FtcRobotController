@@ -9,15 +9,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 public class DriveTrainFC {
-    private DcMotorEx leftFront, rightFront, leftBack, rightBack;
+    private final DcMotorEx leftFront, rightFront, leftBack, rightBack;
     public double powerMode = 1;
-    public double currentPower = powerMode;
     public IMU imu;
-    boolean ok = true;
+    boolean ok;
     public enum State{
         UP,
         DOWN,
-    };
+    }
     State state = State.DOWN;
     IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
             RevHubOrientationOnRobot.UsbFacingDirection.UP));
@@ -42,8 +41,8 @@ public class DriveTrainFC {
 
     public void goGoVrumVrumFC(Gamepad lastGamepad, Gamepad currentGamepad) {
 
-        double y = currentGamepad.left_stick_y;
-        double x = -currentGamepad.left_stick_x;
+        double y = -currentGamepad.left_stick_y;
+        double x = currentGamepad.left_stick_x;
         double rx = -currentGamepad.right_trigger+currentGamepad.left_trigger;
         if (currentGamepad.options) {
             imu.resetYaw();
@@ -77,11 +76,11 @@ public class DriveTrainFC {
         }
 
         if (currentGamepad.circle){
-            if (ok==true) {
+            if (ok) {
                 state=State.UP;
                 ok=false;
             }
-            else if (ok==false){
+            else {
                 state = State.DOWN;
                 ok=true;
             }

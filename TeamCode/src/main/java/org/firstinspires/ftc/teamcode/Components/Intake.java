@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode.Components;
 
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Intake {
 
-    private CRServo intake1, intake2;
-    private Servo rotate;
+    private final CRServo intake1, intake2;
+    private final Servo rotate;
     boolean ok = false;
 
     public Intake(CRServo intake1, CRServo intake2, Servo rotateServo) {
@@ -25,7 +24,7 @@ public class Intake {
         rotateIn,
         rotateOut,
 
-    };
+    }
     State state = State.neutralState;
 
     public void aspirator(Gamepad currentGamepad) {
@@ -48,11 +47,11 @@ public class Intake {
 
         }
         if (currentGamepad.square) {
-            if (ok == false) {
+            if (!ok) {
                 state = State.rotateIn;
                 ok = true;
             }
-            if (ok == true) {
+            else{
                 state = State.rotateOut;
                 ok = false;
             }

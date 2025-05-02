@@ -6,18 +6,17 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Extendo {
     private static final double rotation = 2786;
-    private static final double divizor = 0.5;
-    private DcMotorEx extendMotor;
-    int balancePos =(int)(rotation * divizor);
+    private static final double divisor = 0.5;
+    private final DcMotorEx extendMotor;
+    int balancePos =(int)(rotation * divisor);
     int targetPos = (int)rotation;
     int neutralPos;
-    private boolean ok;
     public enum State{
         Neutral,
         Retract,
         Balance,
         Extend,
-    };
+    }
     State state = State.Neutral;
     public Extendo (DcMotorEx extendMotor){
         this.extendMotor = extendMotor;

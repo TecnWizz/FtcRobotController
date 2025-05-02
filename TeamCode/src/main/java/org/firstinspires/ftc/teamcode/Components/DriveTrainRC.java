@@ -6,14 +6,13 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 
 public class DriveTrainRC {
-    private DcMotorEx leftFront, rightFront, leftBack, rightBack;
+    private final DcMotorEx leftFront, rightFront, leftBack, rightBack;
     private double powerMode = 1;
-    private double currentPower = powerMode;
-    boolean ok = true;
+    boolean ok;
     public enum State{
         UP,
         DOWN,
-    };
+    }
     State state = State.DOWN;
     public DriveTrainRC(DcMotorEx leftFront, DcMotorEx rightFront, DcMotorEx leftBack, DcMotorEx rightBack) {
         ok=true;
@@ -58,11 +57,11 @@ public class DriveTrainRC {
         }
 
         if (currentGamepad.circle){
-            if (ok==true) {
+            if (ok) {
                 state = State.UP;
                 ok=false;
             }
-            else if (ok==false){
+            else {
                 state = State.DOWN;
                 ok=true;
             }
