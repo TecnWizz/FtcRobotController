@@ -39,12 +39,12 @@ public class DriveTrainFC {
     }
 
 
-    public void goGoVrumVrumFC(Gamepad lastGamepad, Gamepad currentGamepad) {
+    public void goGoVrumVrumFC(Gamepad aGamepad) {
 
-        double y = -currentGamepad.left_stick_y;
-        double x = currentGamepad.left_stick_x;
-        double rx = -currentGamepad.right_trigger+currentGamepad.left_trigger;
-        if (currentGamepad.options) {
+        double y = -aGamepad.left_stick_y;
+        double x = aGamepad.left_stick_x;
+        double rx = -aGamepad.right_trigger+aGamepad.left_trigger;
+        if (aGamepad.options) {
             imu.resetYaw();
         }
 
@@ -75,7 +75,7 @@ public class DriveTrainFC {
                 break;
         }
 
-        if (currentGamepad.circle){
+        if (aGamepad.circle){
             if (ok) {
                 state=State.UP;
                 ok=false;

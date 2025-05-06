@@ -28,7 +28,7 @@ public class Lift{
         DOWN,
     }
     State state = State.DOWN;
-    public void dropDown(Gamepad currentGamepad) {
+    public void dropDown(Gamepad bGamepad) {
 
         switch (state){
             case UP:
@@ -46,7 +46,7 @@ public class Lift{
                 break;
         }
 
-        if (currentGamepad.circle){
+        if (bGamepad.circle){
             if (ok) {
                 state = State.UP;
                 ok=false;

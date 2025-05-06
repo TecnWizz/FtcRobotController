@@ -23,10 +23,8 @@ public class TeleopFC extends LinearOpMode {
     private Intake intake;
     private Lift lift;
     private Extendo extendo;
-    private final Gamepad lastGamepad1 = new Gamepad();
-    private final Gamepad currentGamepad1 = new Gamepad();
-    private final Gamepad lastGamepad2 = new Gamepad();
-    private final Gamepad currentGamepad2 = new Gamepad();
+    private Gamepad aGamepad;
+    private Gamepad bGamepad;
     DcMotorEx frontLeft,backLeft,frontRight,backRight,liftMotor1,liftMotor2,extendMotor;
     CRServo intake1,intake2;
     Servo rotate;
@@ -40,16 +38,10 @@ public class TeleopFC extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            lastGamepad1.copy(currentGamepad1);
-            lastGamepad2.copy(currentGamepad2);
-
-            chassis.goGoVrumVrumFC(lastGamepad1, currentGamepad1);
-            intake.aspirator(currentGamepad2);
-            lift.dropDown(currentGamepad2);
-            extendo.extend(currentGamepad2);
-
-            currentGamepad1.copy(gamepad1);
-            currentGamepad2.copy(gamepad2);
+            chassis.goGoVrumVrumFC(aGamepad);
+            ///intake.aspirator(gamepad2);
+            ///lift.dropDown(gamepad2);
+            ///extendo.extend(gamepad2);
 
             telemetry.update();
 
@@ -58,8 +50,8 @@ public class TeleopFC extends LinearOpMode {
 
     private void initializeHardware() {
         telemetry.addData("0::---------------------------:",0);
-        telemetry.addData("Gamepad1 input",currentGamepad1);
-        telemetry.addData("Gaempad2 input",currentGamepad2);
+        telemetry.addData("Gamepad1 input",aGamepad);
+        telemetry.addData("Gaempad2 input",bGamepad);
         telemetry.addData("0::---------------------------:",0);
 
         frontLeft = hardwareMap.get(DcMotorEx.class,"frontLeft");
@@ -67,7 +59,7 @@ public class TeleopFC extends LinearOpMode {
         backLeft = hardwareMap.get(DcMotorEx.class,"backLeft");
         backRight = hardwareMap.get(DcMotorEx.class,"backRight");
         imu = hardwareMap.get(IMU.class,"imu");
-
+/*
         extendMotor = hardwareMap.get(DcMotorEx.class,"extendMotor");
         liftMotor1 = hardwareMap.get(DcMotorEx.class,"liftMotor1");
         liftMotor2 = hardwareMap.get(DcMotorEx.class,"liftMotor2");
@@ -84,10 +76,13 @@ public class TeleopFC extends LinearOpMode {
         backLeft.setMotorType(m);
         backRight.setMotorType(m);
 
-        chassis = new DriveTrainFC(frontLeft, frontRight, backLeft, backRight,imu);
-        intake = new Intake(intake1,intake2,rotate);
+         intake = new Intake(intake1,intake2,rotate);
         extendo = new Extendo (extendMotor);
         lift = new Lift(liftMotor1,liftMotor2);
+
+
+ */
+        chassis = new DriveTrainFC(frontLeft, frontRight, backLeft, backRight,imu);
 
 
 

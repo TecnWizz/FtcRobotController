@@ -27,16 +27,16 @@ public class Intake {
     }
     State state = State.neutralState;
 
-    public void aspirator(Gamepad currentGamepad) {
+    public void aspirator(Gamepad bGamepad) {
 
         switch (state) {
             case intake:
-                intake1.setPower(currentGamepad.right_trigger);
-                intake2.setPower(currentGamepad.right_trigger);
+                intake1.setPower(bGamepad.right_trigger);
+                intake2.setPower(bGamepad.right_trigger);
                 break;
             case outake:
-                intake1.setPower(-currentGamepad.left_trigger);
-                intake2.setPower(-currentGamepad.left_trigger);
+                intake1.setPower(-bGamepad.left_trigger);
+                intake2.setPower(-bGamepad.left_trigger);
                 break;
             case rotateIn:
                 rotate.setPosition(1);
@@ -46,7 +46,7 @@ public class Intake {
                 break;
 
         }
-        if (currentGamepad.square) {
+        if (bGamepad.square) {
             if (!ok) {
                 state = State.rotateIn;
                 ok = true;
@@ -56,10 +56,10 @@ public class Intake {
                 ok = false;
             }
         }
-        if (currentGamepad.right_trigger != 0) {
+        if (bGamepad.right_trigger != 0) {
             state = State.intake;
         }
-        if (currentGamepad.left_trigger != 0) {
+        if (bGamepad.left_trigger != 0) {
             state = State.outake;
         }
 

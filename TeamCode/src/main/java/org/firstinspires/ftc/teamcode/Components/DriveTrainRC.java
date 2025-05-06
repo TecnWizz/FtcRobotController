@@ -30,11 +30,11 @@ public class DriveTrainRC {
         rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
-    public void goGoVrumVrumRC(Gamepad lastGamepad, Gamepad currentGamepad) {
+    public void goGoVrumVrumRC(Gamepad aGamepad) {
 
-        double y = currentGamepad.left_stick_y;
-        double x = currentGamepad.left_stick_x * 1.1;
-        double rx = -currentGamepad.right_trigger+currentGamepad.left_trigger;
+        double y = -aGamepad.left_stick_y;
+        double x = aGamepad.left_stick_x * 1.1;
+        double rx = aGamepad.right_trigger-aGamepad.left_trigger;
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx)/ denominator * powerMode;
@@ -56,7 +56,7 @@ public class DriveTrainRC {
                 break;
         }
 
-        if (currentGamepad.circle){
+        if (aGamepad.circle){
             if (ok) {
                 state = State.UP;
                 ok=false;
