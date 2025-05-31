@@ -8,12 +8,10 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.teamcode.Components.DriveTrainFC;
 import org.firstinspires.ftc.teamcode.Components.Extendo;
 import org.firstinspires.ftc.teamcode.Components.Intake;
-import org.firstinspires.ftc.teamcode.Components.Lift;
 
 @TeleOp(name = "Avocado_Tele(field centric)")
 public class TeleopFC extends LinearOpMode {
@@ -21,7 +19,6 @@ public class TeleopFC extends LinearOpMode {
 
    private DriveTrainFC chassis;
     private Intake intake;
-    private Lift lift;
     private Extendo extendo;
     private Gamepad aGamepad;
     private Gamepad bGamepad;

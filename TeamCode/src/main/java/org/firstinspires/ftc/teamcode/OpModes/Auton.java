@@ -4,6 +4,8 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -16,7 +18,6 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 @Autonomous(name="Auton_Test")
 public class Auton extends OpMode {
-
     OpenCvCamera webcam1 = null;
     MecanumDrive drive = new MecanumDrive (hardwareMap , new Pose2d(0,0,0));
 
@@ -25,14 +26,14 @@ public class Auton extends OpMode {
 
         WebcamName webcam = hardwareMap.get(WebcamName.class,"webcam1");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam1 = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        webcam1 = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.FRONT, cameraMonitorViewId);
 
         webcam1.setPipeline(new PipelineCv());
 
         webcam1.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                webcam1.startStreaming(640,360, OpenCvCameraRotation.UPRIGHT);
+                webcam1.startStreaming(1920,1080, OpenCvCameraRotation.UPSIDE_DOWN);
             }
 
             @Override
@@ -54,5 +55,7 @@ public class Auton extends OpMode {
                         .lineToY(0)
                         .build());
     }
+
+
 
 }

@@ -22,8 +22,8 @@ public class PipelineCv extends OpenCvPipeline {
         Imgproc.cvtColor(input,YCbCr,Imgproc.COLOR_RGB2YCrCb);
         telemetry.addLine("Pipeline running");
 
-        Rect leftRect = new Rect(1,1,319,359);
-        Rect rightRect = new Rect(320,1,319,359);
+        Rect leftRect = new Rect(1,1,1919,1079);
+        Rect rightRect = new Rect(1080,1,1919,1079);
 
         input.copyTo(output);
         Imgproc.rectangle(output,leftRect,rectColor,2);
