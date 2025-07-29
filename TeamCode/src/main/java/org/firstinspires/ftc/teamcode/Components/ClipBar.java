@@ -7,9 +7,6 @@ public class ClipBar {
 
     private CRServo clipStealer, clipPusher;
 
-    public ClipBar (Servo clipStealer, Servo clipPusher){
-        this.clipStealer = clipStealer;
-        this.clipPusher = clipPusher;
-    }
+
 
 }
