@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 
-public class DriveTrainRC {
+public class DriveTrain {
     private final DcMotorEx leftFront, rightFront, leftBack, rightBack;
     private double powerMode = 1;
     boolean ok;
@@ -14,7 +14,7 @@ public class DriveTrainRC {
         DOWN,
     }
     State state = State.DOWN;
-    public DriveTrainRC(DcMotorEx leftFront, DcMotorEx rightFront, DcMotorEx leftBack, DcMotorEx rightBack) {
+    public DriveTrain(DcMotorEx leftFront, DcMotorEx rightFront, DcMotorEx leftBack, DcMotorEx rightBack) {
         ok=true;
         this.leftFront = leftFront;
         this.rightFront = rightFront;

@@ -25,7 +25,7 @@ public class Extendo {
         extendMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extendMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public void extend (Gamepad bGamepad){
+    public void extend (Gamepad Gamepad2){
 
         switch (state){
             case Retract:
@@ -41,13 +41,13 @@ public class Extendo {
                   extendMotor.setPower(1);
                   break;
         }
-        if (bGamepad.circle)
+        if (Gamepad2.circle)
             state=State.Retract;
-        if (bGamepad.right_bumper)
+        if (Gamepad2.right_bumper)
             state=State.Balance;
-        if (bGamepad.left_bumper)
+        if (Gamepad2.left_bumper)
             state=State.Extend;
 
-        extendMotor.setPower(bGamepad.right_stick_x);
+        extendMotor.setPower(Gamepad2.right_stick_x);
     }
 }

@@ -11,23 +11,21 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
-import org.firstinspires.ftc.teamcode.Components.DriveTrainRC;
+import org.firstinspires.ftc.teamcode.Components.DriveTrain;
 import org.firstinspires.ftc.teamcode.Components.Extendo;
 import org.firstinspires.ftc.teamcode.Components.Intake;
 
 @TeleOp(name = "Avocado_Tele(robot centric)")
-public class TeleopRC extends LinearOpMode {
+public class Teleop extends LinearOpMode {
 
 
-    private DriveTrainRC chassis;
+    private DriveTrain chassis;
     private Intake intake;
-    private Lift lift;
     private Extendo extendo;
-    public Gamepad aGamepad = new Gamepad();
-    public Gamepad bGamepad = new Gamepad();
-    DcMotorEx leftFront,leftBack,rightFront,rightBack,extendMotor,liftMotor1,liftMotor2;
-    CRServo intake1,intake2;
-    Servo rotate;
+    public Gamepad Gamepad1 = new Gamepad();
+    public Gamepad Gamepad2 = new Gamepad();
+    DcMotorEx leftFront,leftBack,rightFront,rightBack,extendMotor;
+    Servo extend,claw,rclaw,rotation,clipClaw,clipArm;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -38,10 +36,8 @@ public class TeleopRC extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-            chassis.goGoVrumVrumRC(gamepad1);
-           /// intake.aspirator(gamepad2);
-           /// lift.dropDown(gamepad2);
-           /// extendo.extend(gamepad2);
+            ///chassis.goGoVrumVrumRC(gamepad1);
+           intake.intake(Gamepad2);
 
             telemetry.update();
 
@@ -50,10 +46,10 @@ public class TeleopRC extends LinearOpMode {
 
     private void initializeHardware() {
         telemetry.addData("0::---------------------------:",0);
-        telemetry.addData("Gamepad1 input",aGamepad);
-        telemetry.addData("Gamepad2 input",bGamepad);
+        telemetry.addData("Gamepad1 input",Gamepad1);
+        telemetry.addData("Gamepad2 input",Gamepad2);
         telemetry.addData("0::---------------------------:",0);
-
+    /*
         leftFront = hardwareMap.get(DcMotorEx.class,"leftFront");
         rightFront = hardwareMap.get(DcMotorEx.class,"rightFront");
         leftBack = hardwareMap.get(DcMotorEx.class,"leftBack");
@@ -67,22 +63,19 @@ public class TeleopRC extends LinearOpMode {
         rightFront.setMotorType(m);
         leftBack.setMotorType(m);
         rightFront.setMotorType(m);
-
-/*
-        extendMotor = hardwareMap.get(DcMotorEx.class,"extendMotor");
-        intake1 = hardwareMap.get(CRServo.class,"intake1");
-        intake2 = hardwareMap.get(CRServo.class,"intake2");
-        liftMotor1 = hardwareMap.get(DcMotorEx.class,"liftMotor1");
-        liftMotor2 = hardwareMap.get(DcMotorEx.class,"liftMotor2");
-        rotate = hardwareMap.get(Servo.class,"rotate");
+*/
+        extend = hardwareMap.get(Servo.class,"extend");
+        claw = hardwareMap.get(Servo.class,"claw");
+        rclaw = hardwareMap.get(Servo.class,"rclaw");
+        rotation = hardwareMap.get(Servo.class,"rotation");
 
 
-        intake = new Intake(intake1,intake2,rotate);
-        lift = new Lift(liftMotor1,liftMotor2);
-        extendo = new Extendo(extendMotor);
 
- */
-        chassis = new DriveTrainRC(leftFront, rightFront, leftBack, rightBack);
+        intake = new Intake(extend,claw,rclaw,rotation,clipArm,clipClaw);
+
+
+
+        //chassis = new DriveTrain(leftFront, rightFront, leftBack, rightBack);
 
 
 
