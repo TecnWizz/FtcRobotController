@@ -30,7 +30,7 @@ public class DriveTrain {
         rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
-    public void goGoVrumVrumRC(Gamepad aGamepad) {
+    public void drive(Gamepad aGamepad) {
 
         double y = -aGamepad.left_stick_y;
         double x = aGamepad.left_stick_x * 1.1;

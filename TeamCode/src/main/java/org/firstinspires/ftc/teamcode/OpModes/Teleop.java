@@ -35,9 +35,8 @@ public class Teleop extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-
-            ///chassis.goGoVrumVrumRC(gamepad1);
-           intake.intake(Gamepad2);
+            chassis.drive(Gamepad1);
+            intake.intake(Gamepad2);
 
             telemetry.update();
 
@@ -49,7 +48,7 @@ public class Teleop extends LinearOpMode {
         telemetry.addData("Gamepad1 input",Gamepad1);
         telemetry.addData("Gamepad2 input",Gamepad2);
         telemetry.addData("0::---------------------------:",0);
-    /*
+
         leftFront = hardwareMap.get(DcMotorEx.class,"leftFront");
         rightFront = hardwareMap.get(DcMotorEx.class,"rightFront");
         leftBack = hardwareMap.get(DcMotorEx.class,"leftBack");
@@ -63,7 +62,7 @@ public class Teleop extends LinearOpMode {
         rightFront.setMotorType(m);
         leftBack.setMotorType(m);
         rightFront.setMotorType(m);
-*/
+
         extend = hardwareMap.get(Servo.class,"extend");
         claw = hardwareMap.get(Servo.class,"claw");
         rclaw = hardwareMap.get(Servo.class,"rclaw");
@@ -71,11 +70,9 @@ public class Teleop extends LinearOpMode {
 
 
 
+
         intake = new Intake(extend,claw,rclaw,rotation,clipArm,clipClaw);
-
-
-
-        //chassis = new DriveTrain(leftFront, rightFront, leftBack, rightBack);
+        chassis = new DriveTrain(leftFront, rightFront, leftBack, rightBack);
 
 
 

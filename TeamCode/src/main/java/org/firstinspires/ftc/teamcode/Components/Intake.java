@@ -15,13 +15,21 @@ public class Intake {
 
     };
     State state = State.start;
-    public Intake (Servo extend, Servo claw, Servo rclawl, Servo rotation,Servo clipArm, Servo clipClaw){
+    public Intake (Servo extend, Servo claw, Servo rclaw, Servo rotation,Servo clipArm, Servo clipClaw){
         this.extend=extend;
         this.claw=claw;
-        this.rclaw=rclawl;
+        this.rclaw=rclaw;
         this.rotation=rotation;
         this.clipClaw = clipClaw;
         this.clipArm = clipArm;
+
+        extend.setPosition(0);
+        claw.setPosition(0);
+        rclaw.setPosition(0);
+        rotation.setPosition(0);
+        clipArm.setPosition(0);
+        clipClaw.setPosition(0);
+
     }
 
     public void intake (Gamepad Gamepad2){
