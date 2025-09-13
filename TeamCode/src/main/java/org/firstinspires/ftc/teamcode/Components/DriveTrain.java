@@ -3,70 +3,59 @@ package org.firstinspires.ftc.teamcode.Components;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 
 public class DriveTrain {
     private final DcMotorEx leftFront, rightFront, leftBack, rightBack;
     private double powerMode = 1;
     boolean ok;
-    public enum State{
-        UP,
-        DOWN,
-    }
-    State state = State.DOWN;
     public DriveTrain(DcMotorEx leftFront, DcMotorEx rightFront, DcMotorEx leftBack, DcMotorEx rightBack) {
-        ok=true;
+
         this.leftFront = leftFront;
         this.rightFront = rightFront;
         this.leftBack=leftBack;
         this.rightBack = rightBack;
 
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
-        leftBack.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        rightBack.setDirection(DcMotor.Direction.REVERSE);
 
         leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
+    public void test (Gamepad Gamepad1){
 
-    public void drive(Gamepad aGamepad) {
+        if (Gamepad1.triangle)
+            leftFront.setPower(1);
 
-        double y = -aGamepad.left_stick_y;
-        double x = aGamepad.left_stick_x * 1.1;
-        double rx = aGamepad.right_trigger-aGamepad.left_trigger;
+        if (Gamepad1.cross)
+            rightFront.setPower(1);
+
+        if (Gamepad1.square)
+            leftBack.setPower(1);
+
+        if (Gamepad1.circle)
+            rightBack.setPower(1);
+    }
+
+    public void drive(Gamepad Gamepad1) {
+
+        double y = -Gamepad1.left_stick_y;
+        double x = Gamepad1.left_stick_x * 1.1;
+        double rx = Gamepad1.right_trigger-Gamepad1.left_trigger;
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (y + x + rx)/ denominator * powerMode;
-        double backLeftPower = (y - x + rx) / denominator * powerMode;
-        double frontRightPower = (y - x - rx) / denominator * powerMode;
-        double backRightPower = (y + x - rx) / denominator * powerMode;
+        double frontLeftPower = (y + x + rx)/ denominator;
+        double backLeftPower = (y + x - rx) / denominator;
+        double frontRightPower = (y - x - rx) / denominator;
+        double backRightPower = (y - x + rx) / denominator;
 
         leftFront.setPower(frontLeftPower);
         leftBack.setPower(backLeftPower);
         rightFront.setPower(frontRightPower);
         rightBack.setPower(backRightPower);
-
-        switch (state){
-            case UP:
-                powerMode=0.5;
-                break;
-            case DOWN:
-                powerMode=1;
-                break;
-        }
-
-        if (aGamepad.circle){
-            if (ok) {
-                state = State.UP;
-                ok=false;
-            }
-            else {
-                state = State.DOWN;
-                ok=true;
-            }
-
-        }
 
     }
 

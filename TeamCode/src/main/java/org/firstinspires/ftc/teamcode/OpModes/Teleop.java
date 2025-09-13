@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
 
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -12,41 +12,43 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.teamcode.Components.DriveTrain;
-import org.firstinspires.ftc.teamcode.Components.Extendo;
 import org.firstinspires.ftc.teamcode.Components.Intake;
+import org.firstinspires.ftc.teamcode.Components.Outake;
 
-@TeleOp(name = "Avocado_Tele(robot centric)")
+@TeleOp(name = "Mascul Feroce")
 public class Teleop extends LinearOpMode {
 
 
     private DriveTrain chassis;
     private Intake intake;
-    private Extendo extendo;
-    public Gamepad Gamepad1 = new Gamepad();
-    public Gamepad Gamepad2 = new Gamepad();
-    DcMotorEx leftFront,leftBack,rightFront,rightBack,extendMotor;
-    Servo extend,claw,rclaw,rotation,clipClaw,clipArm;
+    private Outake outake;
+    DcMotorEx leftFront,leftBack,rightFront,rightBack,intakeMotor,rotate,outakeMotor;
+    Servo servo1,servo2,push;
+    RevColorSensorV3 colorSensor1,colorSensor2;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
+
         initializeHardware();
 
         waitForStart();
 
         while (opModeIsActive()) {
 
-            chassis.drive(Gamepad1);
-            intake.intake(Gamepad2);
-
+            chassis.drive(gamepad1);
+            intake.Fiorosul(gamepad2);
+            outake.Shooter(gamepad2);
             telemetry.update();
 
         }
     }
 
     private void initializeHardware() {
+
         telemetry.addData("0::---------------------------:",0);
-        telemetry.addData("Gamepad1 input",Gamepad1);
-        telemetry.addData("Gamepad2 input",Gamepad2);
+        telemetry.addData("Gamepad1 input",gamepad1);
+        telemetry.addData("Gamepad2 input",gamepad2);
         telemetry.addData("0::---------------------------:",0);
 
         leftFront = hardwareMap.get(DcMotorEx.class,"leftFront");
@@ -63,15 +65,19 @@ public class Teleop extends LinearOpMode {
         leftBack.setMotorType(m);
         rightFront.setMotorType(m);
 
-        extend = hardwareMap.get(Servo.class,"extend");
-        claw = hardwareMap.get(Servo.class,"claw");
-        rclaw = hardwareMap.get(Servo.class,"rclaw");
-        rotation = hardwareMap.get(Servo.class,"rotation");
+        intakeMotor = hardwareMap.get(DcMotorEx.class,"intakeMotor");
+        outakeMotor = hardwareMap.get(DcMotorEx.class,"outakeMotor");
+        rotate = hardwareMap.get(DcMotorEx.class,"rotate");
 
+        servo1 = hardwareMap.get(Servo.class,"servo1");
+        servo2 = hardwareMap.get(Servo.class,"servo2");
+        push = hardwareMap.get(Servo.class,"push");
 
+        colorSensor1 = hardwareMap.get(RevColorSensorV3.class,"colorSensor1");
+        colorSensor2 = hardwareMap.get(RevColorSensorV3.class,"colorSensor2");
 
-
-        intake = new Intake(extend,claw,rclaw,rotation,clipArm,clipClaw);
+        intake = new Intake(intakeMotor,servo1,servo2,colorSensor1,colorSensor2);
+        outake = new Outake(outakeMotor,rotate,push);
         chassis = new DriveTrain(leftFront, rightFront, leftBack, rightBack);
 
 
