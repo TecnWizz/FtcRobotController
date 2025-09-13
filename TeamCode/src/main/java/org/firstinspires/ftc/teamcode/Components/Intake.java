@@ -209,16 +209,16 @@ public class Intake {
                 }
         }
 
-        intakeMotor.setPower(y);
-        intakeMotor.setPower(-y1);
+        intakeMotor.setPower(y * 0.5);
+        intakeMotor.setPower(-y1 * 0.5);
 
-        telemetry.addData("Obelisk sort:",Obelisk);
-        telemetry.addData("RGB", "%d / %d / %d", red1, green1, blue1);
-        telemetry.addData("HSV", "H: %.1f  S: %.2f  V: %.2f", hue1, saturation1, value1);
-        telemetry.addData("ColorDetected",colorDetected1);
-        telemetry.addData("RGB", "%d / %d / %d", red2, green2, blue2);
-        telemetry.addData("HSV", "H: %.1f  S: %.2f  V: %.2f", hue2, saturation2, value2);
-        telemetry.addData("ColorDetected",colorDetected2);
+        telemetry.addData("Obelisk sort: ",Obelisk);
+        telemetry.addData("RGB ", "%d / %d / %d", red1, green1, blue1);
+        telemetry.addData("HSV ", "H: %.1f  S: %.2f  V: %.2f", hue1, saturation1, value1);
+        telemetry.addData("ColorDetected ",colorDetected1);
+        telemetry.addData("RGB ", "%d / %d / %d", red2, green2, blue2);
+        telemetry.addData("HSV ", "H: %.1f  S: %.2f  V: %.2f", hue2, saturation2, value2);
+        telemetry.addData("ColorDetected ",colorDetected2);
     }
 }
 

@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 public class DriveTrain {
     private final DcMotorEx leftFront, rightFront, leftBack, rightBack;
-    private double powerMode = 1;
     boolean ok;
     public DriveTrain(DcMotorEx leftFront, DcMotorEx rightFront, DcMotorEx leftBack, DcMotorEx rightBack) {
 
@@ -24,41 +23,33 @@ public class DriveTrain {
         rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
     }
-    public void test (Gamepad Gamepad1){
+    private double scaleInput(double input) {
+        double deadzone = 0.05;
+        if (Math.abs(input) < deadzone) return 0;
 
-        if (Gamepad1.triangle)
-            leftFront.setPower(1);
-
-        if (Gamepad1.cross)
-            rightFront.setPower(1);
-
-        if (Gamepad1.square)
-            leftBack.setPower(1);
-
-        if (Gamepad1.circle)
-            rightBack.setPower(1);
+        return Math.pow(input, 3);
     }
-
     public void drive(Gamepad Gamepad1) {
 
         double y = -Gamepad1.left_stick_y;
-        double x = Gamepad1.left_stick_x * 1.1;
+        double x = Gamepad1.left_stick_x*1.1;
         double rx = Gamepad1.right_trigger-Gamepad1.left_trigger;
-
+        x = scaleInput(x);
+        y = scaleInput(y);
+        rx = scaleInput(rx);
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx)/ denominator;
-        double backLeftPower = (y + x - rx) / denominator;
+        double backLeftPower = (y - x + rx) / denominator;
         double frontRightPower = (y - x - rx) / denominator;
-        double backRightPower = (y - x + rx) / denominator;
-
+        double backRightPower = (y + x - rx) / denominator;
         leftFront.setPower(frontLeftPower);
         leftBack.setPower(backLeftPower);
         rightFront.setPower(frontRightPower);
         rightBack.setPower(backRightPower);
 
     }
-
 
     }
 
