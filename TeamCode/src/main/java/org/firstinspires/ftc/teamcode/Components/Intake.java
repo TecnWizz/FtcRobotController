@@ -208,7 +208,6 @@ public class Intake {
                         break;
                 }
         }
-
         intakeMotor.setPower(y * 0.5);
         intakeMotor.setPower(-y1 * 0.5);
 
