@@ -20,11 +20,11 @@ public class DualSwerve {
         double x = Gamepad1.left_stick_x;
         double y = -Gamepad1.left_stick_y;
         double rx = Gamepad1.right_trigger-Gamepad1.left_trigger;
-        double mp = Math.sqrt(x*x+y*y);
         double q=Math.toDegrees(Math.atan2(x,y))/180;
-
-        ch1.setPosition(Math.max(q,rx));
-        ch2.setPosition(Math.max(q,rx));
+        double q1 = Math.abs(q);
+        double mp = Math.sqrt(x*x+y*y)*(q/q1);
+        ch1.setPosition(Math.max(q1,rx));
+        ch2.setPosition(Math.max(q1,rx));
         motor1.setPower(mp);
         motor2.setPower(mp);
     }

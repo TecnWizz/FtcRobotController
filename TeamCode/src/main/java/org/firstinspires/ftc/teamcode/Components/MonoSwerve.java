@@ -19,11 +19,11 @@ public class MonoSwerve {
         double x = Gamepad1.left_stick_x;
         double y = Gamepad1.left_stick_y;
         double rx = Gamepad1.right_trigger-Gamepad1.left_trigger;
-        double mp = Math.sqrt(x*x+y*y);
         double q = Math.toDegrees(Math.atan2(x,y))/180;
-
+        double q1 = Math.abs(q);
+        double mp = Math.sqrt(x*x+y*y)*(q/q1);
         motor.setPower(mp);
-        ch1.setPosition(Math.max(q,rx));
+        ch1.setPosition(Math.max(q1,rx));
 
     }
 }
