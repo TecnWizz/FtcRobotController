@@ -6,6 +6,7 @@ import android.graphics.Color;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -16,6 +17,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Intake {
     Telemetry telemetry;
     private DcMotorEx intakeMotor;
+    private CRServo servo;
+
     private Servo servo1,servo2;
     private RevColorSensorV3 colorSensor1,colorSensor2;
 
@@ -45,6 +48,7 @@ public class Intake {
         colorSensor1.enableLed(true);
         colorSensor2.enableLed(true);
     }
+
     public void Fiorosul(Gamepad gamepad){
 
         boolean x = gamepad.square;
@@ -218,6 +222,18 @@ public class Intake {
         telemetry.addData("RGB ", "%d / %d / %d", red2, green2, blue2);
         telemetry.addData("HSV ", "H: %.1f  S: %.2f  V: %.2f", hue2, saturation2, value2);
         telemetry.addData("ColorDetected ",colorDetected2);
+    }
+
+
+    public Intake (DcMotorEx intakeMotor,CRServo servo){
+        this.intakeMotor=intakeMotor;
+        this.servo=servo;
+        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+    public void test(Gamepad Gamepad1) {
+        int x = Gamepad1.cross?1:0;
+            intakeMotor.setPower(-x*0.8);
+            servo.setPower(0.5);
     }
 }
 

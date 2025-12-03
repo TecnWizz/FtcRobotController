@@ -3,10 +3,12 @@ package org.firstinspires.ftc.teamcode.OpModes;
 
 import android.util.Size;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -15,29 +17,35 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 import org.firstinspires.ftc.teamcode.Components.DriveTrain;
 import org.firstinspires.ftc.teamcode.Components.Intake;
 import org.firstinspires.ftc.teamcode.Components.Outake;
+import org.firstinspires.ftc.teamcode.Components.Outake2;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+
+import java.util.List;
 
 @TeleOp(name = "Mascul Feroce")
 public class Teleop extends LinearOpMode {
 
 
-    private DriveTrain chassis;
-    private Outake outake; Telemetry telemetry;
+    private DriveTrain chassis; private Intake intake; private CRServo servo;
+    private Outake2 outake; Servo transfer;
+    private VisionPortal visionPortal;
     private AprilTagProcessor tagProcessor;
-    double fx,fy,cx,cy;
-    DcMotorEx rotate,launchMotor,leftFront,leftBack,rightBack,rightFront,shoot;
+
+    DcMotorEx intakeMotor,rotate,leftFront,leftBack,rightBack,rightFront,shoot1,shoot2;
     WebcamName webcam1;
     RevColorSensorV3 colorSensor1,colorSensor2;
-    private VisionPortal vPortal;
-    private AprilTagDetection tag;
 
 
-
+    public static Telemetry dashboard;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -45,36 +53,19 @@ public class Teleop extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-
-            chassis.drive(gamepad1);
-            outake.autoShooter();
+            outake.aimbot();
+            dashboard.addLine("started dashboard");
+            dashboard.update();
         }
     }
     private void initializeHardware() {
-
-        tagProcessor = new AprilTagProcessor.Builder()
-                .setDrawAxes(true)
-                .setDrawCubeProjection(true)
-                .setDrawTagID(true)
-                .setDrawTagOutline(true)
-                .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
-                .setLensIntrinsics(fx,fy,cx,cy)
-                .build();
-
-        vPortal = new VisionPortal.Builder()
-                .addProcessor(tagProcessor)
-                .setCamera(webcam1)
-                .setCameraResolution(new Size(640, 480))
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-                .build();
-
+/*
+        servo = hardwareMap.get(CRServo.class,"servo");
+        intakeMotor = hardwareMap.get(DcMotorEx.class,"intakeMotor");
         leftFront = hardwareMap.get(DcMotorEx.class,"leftFront");
         rightFront = hardwareMap.get(DcMotorEx.class,"rightFront");
         leftBack = hardwareMap.get(DcMotorEx.class,"leftBack");
         rightBack = hardwareMap.get(DcMotorEx.class,"rightBack");
-        shoot = hardwareMap.get(DcMotorEx.class,"shoot");
-        rotate = hardwareMap.get(DcMotorEx.class,"rotate");
-        webcam1 = hardwareMap.get(WebcamName.class,"webcam1");
 
         MotorConfigurationType m= leftFront.getMotorType();
         m.setAchieveableMaxRPMFraction(1);
@@ -84,12 +75,13 @@ public class Teleop extends LinearOpMode {
         leftBack.setMotorType(m);
         rightFront.setMotorType(m);
 
-        chassis = new DriveTrain(leftFront, rightFront, leftBack, rightBack);
-        outake = new Outake(shoot,rotate);
-
-        telemetry.addData("Rotation",Math.toDegrees(tag.ftcPose.bearing));
-        telemetry.addData("Distance",tag.ftcPose.range);
-        telemetry.addData("ID",tag.id);
-
+*/
+        dashboard = FtcDashboard.getInstance().getTelemetry();
+        transfer = hardwareMap.get(Servo.class,"transfer");
+        shoot1 = hardwareMap.get(DcMotorEx.class,"shoot1");
+        shoot2 = hardwareMap.get(DcMotorEx.class,"shoot2");
+        webcam1 = hardwareMap.get(WebcamName.class,"Webcam1");
+        rotate = hardwareMap.get(DcMotorEx.class,"rotate");
+        outake = new Outake2(shoot1,shoot2,rotate,webcam1,transfer);
     }
 }
